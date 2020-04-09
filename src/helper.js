@@ -52,19 +52,20 @@ async function parsePlaylist(fileOrUrl = ``) {
   return result
 }
 
-function addToCache(url) {
+function addToCache({ url }) {
   let id = getUrlPath(url)
 
   cache.add(id)
 }
 
-function checkCache(url) {
+function checkCache({ url }) {
   let id = getUrlPath(url)
 
   return cache.has(id)
 }
 
 function writeToFile(path, item, message = null) {
+  if (!this.isMain) return
   const parts = item.raw.split('\n')
   let output = [parts[0], item.url]
 
@@ -95,8 +96,8 @@ function sleep(ms = 60000) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-const debugLogger = (dbg = false) => {
-  if (!dbg) return () => {}
+function debugLogger(debug) {
+  if (!debug) return () => {}
   return (...args) => console.log(...args)
 }
 
