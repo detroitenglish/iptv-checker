@@ -5,7 +5,7 @@ const sampleSize = require('lodash.samplesize')
 
 async function test(src) {
   return await iptvChecker(src, {
-    debug: false,
+    debug: true,
     timeout: 2000,
   })
 }
