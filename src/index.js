@@ -82,7 +82,7 @@ async function init(
 
   process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = !+insecure
 
-  console.time('Execution time')
+  if (isMain) console.time('Execution time')
 
   try {
     if (!Array.isArray(src)) {
@@ -100,7 +100,7 @@ async function init(
     let checkedItems = []
 
     for (let item of items) {
-      if (!debug && !isMain) {
+      if (!debug && isMain) {
         bar.tick()
       }
 
@@ -121,7 +121,7 @@ async function init(
       if (!isMain) checkedItems.push(checkedItem)
     }
 
-    if (config.debug) {
+    if (config.debug && isMain) {
       console.timeEnd('Execution time')
     }
 
